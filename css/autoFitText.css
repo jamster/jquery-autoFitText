@@ -33,6 +33,7 @@ h3.name {
 	margin-top: 0;
 	margin-bottom: 0;
 	float: left;
+	
 }
 
 
@@ -63,4 +64,4 @@ footer {
 
 #example div.character h3.name span {
 	color: #7f7561;
-}
+ }
