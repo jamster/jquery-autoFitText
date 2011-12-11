@@ -1,0 +1,41 @@
+# Thanks to http://railscasts.com/episodes/272-markdown-with-redcarpet
+
+require 'rubygems'
+require 'redcarpet'
+require 'albino'
+require 'nokogiri'
+require 'pp'
+
+def markdown(text, options = {})
+  options.merge!(
+    :hard_wrap => true,
+    :filter_html => true,
+    :autolink => true,
+    :no_intraemphasis => true,
+    :fenced_code => true,
+    :gh_blockcode => true
+  )
+  options.reject! { |k, v| !v }
+  syntax_highlighter(Redcarpet::Markdown.new(text, options).to_html).html_safe
+end
+def markdown
+  options = {
+    :hard_wrap => true,
+    :filter_html => true,
+    :autolink => true,
+    :no_intraemphasis => true,
+    :fenced_code => true,
+    :gh_blockcode => true
+  }
+  markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, options)
+end
+def syntax_highlighter(html)
+  doc = Nokogiri::HTML(html)
+  doc.search("//pre[@lang]").each do |pre|
+    pre.replace Albino.colorize(pre.text.rstrip, pre[:lang])
+  end
+  doc.to_s
+end
+
+
+puts markdown.render(File.open(File.join(File.dirname(__FILE__), '..', "README.md"), 'r').read)
