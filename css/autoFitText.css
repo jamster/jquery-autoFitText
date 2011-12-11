@@ -50,3 +50,17 @@ body {
 #example div.character div.info img.image {
 	width: 48px;
 }
+
+#example div.character p {
+	color: #6c6c6c;
+}
+
+footer {
+	text-align: center;
+	padding: 18px;
+	font-size: 18px;
+}
+
+#example div.character h3.name span {
+	color: #7f7561;
+}
