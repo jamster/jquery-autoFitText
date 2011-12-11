@@ -46,3 +46,7 @@ body {
 	padding: 0;
 	background: #b0bdcb url(../img/background.png) no-repeat;
 }
+
+#example div.character div.info img.image {
+	width: 48px;
+}

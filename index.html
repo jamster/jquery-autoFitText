@@ -138,11 +138,14 @@
         <hr />
         <div id="example">
             <h2>Example</h2>
+            <p>I scraped the character info for "The Princess Bride", from IMDB.  Below, you'll see that the (cheezy) design wants to keep the width of the headers at 300px so that all the photos can be aligned.  Since we chose a font size of 60px, any name that can fit with the 300px width will stay at 60px.  If they do not, they will be scaled down.</p>
         </div>
+        
 
     </div>
     <footer>
-
+        A combined effort of Between <a href="http://twitter.com/#!/jayamster" target="_blank">Jason Amster</a> &amp; <a href="http://twitter.com/#!/isoceles" target="_blank">Chris Doss</a><br/>
+        Sponsored by <a href="http://www.beenverified.com">BeenVerified.com</ah>
     </footer>
   </div> <!--! end of #container -->
 
@@ -310,11 +313,12 @@
                 <div class="actor">
                     <strong>Played By:</strong> {{actor}}
                 </div>
-                <img class="image" src="{{pic}}" />
+                <img class="image" src="img/{{actor}}.jpg" />
             </div>
             <div class="clearfix"></div>
             <p>{{bio}}</p>
         </div>
+        <hr />
     </script>
     
     <script type="text/javascript" charset="utf-8">
