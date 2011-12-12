@@ -18,6 +18,11 @@ div#main{
 	border-radius: 6px;
 	background-color: #f0f0f0;
 	padding: 10px;
+	margin-top: 70px;
+}
+
+#container header {
+	margin-top: 60px;
 }
 
 div.character {
@@ -28,6 +33,7 @@ div.character {
 h3.name {
   font-family: Original Surfer;
 	width: 300px;
+	height: 70px;
 	font-size: 60px;
 	white-space:nowrap;
 	margin-top: 0;
@@ -64,4 +70,5 @@ footer {
 
 #example div.character h3.name span {
 	color: #7f7561;
+	font-size: 60px;
  }

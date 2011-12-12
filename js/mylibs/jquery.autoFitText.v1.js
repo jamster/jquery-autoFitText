@@ -73,23 +73,27 @@
                 var fontSize = settings.maxFontSize;
                 var maxHeight = element.height();
                 var maxWidth = element.width();
-
                 var ourText = $('span:visible:first', element);
                 ourText.css('font-size', fontSize);
 
-                var textHeight;
-                var textWidth;
+                var textWidth = ourText.width();
+                var textHeight = ourText.height();
                 
-                console.log(ourText.text())
+                // console.log("Name: "+ ourText.text());
+                // console.log("MaxWidth: " + maxWidth)
+                // console.log("TextWidth: "+ textWidth);
+                // console.log("MaxHeight: " + maxHeight)
+                // console.log("TextHeight: "+ textHeight);
+                
                 do {
-                  
+                    // console.log('dec')
                     ourText.css('font-size', fontSize);
                     textHeight = ourText.height();
                     textWidth = ourText.width();
                     fontSize = fontSize - 1;
-                    console.log(textHeight > maxHeight || textWidth > maxWidth);
-                    console.log("TextWidth: " + textWidth);
-                    console.log("MaxWidth: " + maxWidth);
+                    // console.log(textHeight > maxHeight || textWidth > maxWidth);
+                    // console.log("TextWidth: " + textWidth);
+                    // console.log("MaxWidth: " + maxWidth);
                 } while ((textHeight > maxHeight || textWidth > maxWidth) && fontSize > minFontSize);
                 return element;
             }

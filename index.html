@@ -23,10 +23,10 @@
 
   <!-- CSS: implied media=all -->
   <!-- CSS concatenated and minified via ant build script-->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/autoFitText.css">
   <link rel="stylesheet" href="css/pygments_style.css">
-  
   <!-- end CSS-->
 
   
@@ -139,6 +139,13 @@
         <div id="example">
             <h2>Example</h2>
             <p>I scraped the character info for "The Princess Bride", from IMDB.  Below, you'll see that the (cheezy) design wants to keep the width of the headers at 300px so that all the photos can be aligned.  Since we chose a font size of 60px, any name that can fit with the 300px width will stay at 60px.  If they do not, they will be scaled down.</p>
+            <input type="text" name="new_char" value="" id="new_char" class="span6" placeholder="Add a new character"/> 
+            <a href="#" id="add_and_autofit" class="btn primary">Add New Header &amp; AutoFit</a>
+            <a href="#" id="add" class="btn">Add New Header</a>
+            <a href="#" id="autofit" class="btn">AutoFit</a>
+            <div id="examples">
+                
+            </div>
         </div>
         
         <div id="goodies">
@@ -316,7 +323,7 @@
             }
             
         
-        var nopic = "http://i.media-imdb.com/images/SF984f0c61cc142e750d1af8e5fb4fc0c7/nopicture/small/name.png"
+        var nopic = "img/nopic.jpg"
 
         $.each(data['characters'], function(i, character){
             if(character['pic'] == null){
@@ -325,8 +332,44 @@
             if(character['bio'].trim() == ''){
                 character['bio'] = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
             }
-            $("#example").append(Mustache.to_html($("#character_template").html(), character));
+            character['pic'] = character['actor'];
+            
+            $("#examples").append(Mustache.to_html($("#character_template").html(), character));
         })
+
+
+        var add = function(){
+            name = $("#new_char").val();
+            if (name.trim() == ''){
+                name = "Mandy Patinkin is Inigo Montoya? Really?";
+            }
+            new_char = {
+                name: name,
+                pic: 'nopic',
+                bio: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                actor: "NA"
+            }
+            $("#examples").prepend(Mustache.to_html($("#character_template").html(), new_char));
+            $("#new_char").val('')
+        }
+        
+        var autofit = function(){
+            $("div.character h3.name").autoFitText({maxFontSize: 60})
+        }
+        $("a#add").click(function(){
+            add();
+            return false;
+        });
+        $('a#autofit').click(function(){
+            autofit();
+            return false;
+        });
+        
+        $('a#add_and_autofit').click(function(){
+            add();
+            autofit();
+            return false;
+        });
 
     })
     </script>
@@ -340,7 +383,7 @@
                 <div class="actor">
                     <strong>Played By:</strong> {{actor}}
                 </div>
-                <img class="image" src="img/{{actor}}.jpg" />
+                <img class="image" src="img/{{pic}}.jpg" />
             </div>
             <div class="clearfix"></div>
             <p>{{bio}}</p>
