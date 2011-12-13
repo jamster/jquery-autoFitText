@@ -27,7 +27,14 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/autoFitText.css">
   <link rel="stylesheet" href="css/pygments_style.css">
+  <link rel="stylesheet" href="css/smoothness/jquery-ui-1.8.16.custom.css" type="text/css" media="screen" title="no title" charset="utf-8" />
   <!-- end CSS-->
+  
+  <style type="text/css" media="screen">
+    #slider{
+        width: 400px;
+    }
+  </style>
 
   
   <link href="http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:700&v2" rel="stylesheet" type="text/css">
@@ -139,10 +146,26 @@
         <div id="example">
             <h2>Example</h2>
             <p>I scraped the character info for "The Princess Bride", from IMDB.  Below, you'll see that the (cheezy) design wants to keep the width of the headers at 300px so that all the photos can be aligned.  Since we chose a font size of 60px, any name that can fit with the 300px width will stay at 60px.  If they do not, they will be scaled down.</p>
+            
+            <h2>Live Demo</h2>
+            <h3>Header Width</h3>
+            <div id="slider"></div>
+            <hr />
+            <ul class="inputs-list">
+                <li>
+                  <label>
+                    <input type="checkbox" name="auto_fit_with_scale" value="auto_fit_with_scale" id="auto_fit_with_scale">
+                    <span>Autoscale with slide</span>
+                  </label>
+                </li>
+              </ul>
+            <hr />
             <input type="text" name="new_char" value="" id="new_char" class="span6" placeholder="Add a new character"/> 
+
             <a href="#" id="add_and_autofit" class="btn primary">Add New Header &amp; AutoFit</a>
             <a href="#" id="add" class="btn">Add New Header</a>
             <a href="#" id="autofit" class="btn">AutoFit</a>
+            <hr />
             <div id="examples">
                 
             </div>
@@ -189,6 +212,7 @@
   <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
   <script>window.jQuery || document.write('<script src="js/libs/jquery-1.6.2.min.js"><\/script>')</script>
+  <script>document.write('<script src="js/libs/jquery-ui-1.8.16.min.js"><\/script>')</script>
 
   <script defer src="js/libs/mustache.js"></script>
   
@@ -325,6 +349,9 @@
         
         var nopic = "img/nopic.jpg"
 
+        // =======================
+        // = Setting up the demo =
+        // =======================
         $.each(data['characters'], function(i, character){
             if(character['pic'] == null){
                 character['pic'] = nopic;
@@ -338,6 +365,9 @@
         })
 
 
+        // ================================
+        // = Add a new character function =
+        // ================================
         var add = function(){
             name = $("#new_char").val();
             if (name.trim() == ''){
@@ -353,9 +383,16 @@
             $("#new_char").val('')
         }
         
+        // ========================================
+        // = AutoFitText for all h3.name elements =
+        // ========================================
         var autofit = function(){
             $("div.character h3.name").autoFitText({maxFontSize: 60})
         }
+        
+        // ==============================
+        // = Control Functions for Demo =
+        // ==============================
         $("a#add").click(function(){
             add();
             return false;
@@ -374,6 +411,9 @@
     })
     </script>
     
+    <!-- ======================= -->
+    <!-- = Character Templates = -->
+    <!-- ======================= -->
     <script type="text/html" charset="utf-8" id="character_template">
         <div class="character">
             <h3 class="name">
@@ -391,11 +431,35 @@
         <hr />
     </script>
     
+    <!-- ============================== -->
+    <!-- = AutoFitText Initialization = -->
+    <!-- ============================== -->
     <script type="text/javascript" charset="utf-8">
         $(window).load(function(){
             $("div.character h3.name").autoFitText({maxFontSize: 60})
         });
     </script>
-  
+
+    <!-- =================== -->
+    <!-- = Slider for Demo = -->
+    <!-- =================== -->
+    <script type="text/javascript">
+        $(function() {
+            maxWidth = 750;
+            slider = $( "#slider" ).slider({
+                value: parseInt($("h3.name").css("width"))/maxWidth * 100,
+                slide: function(event, ui){
+                    percent = ui.value/100.0 ;
+                    $("h3.name").css({width: (percent*maxWidth)+'px'});
+                    if($("input#auto_fit_with_scale").is(':checked')){
+                        $("div.character h3.name").autoFitText({maxFontSize: 60})
+                    }
+                }
+            });
+            
+            
+        });
+    </script>
+    
 </body>
 </html>
