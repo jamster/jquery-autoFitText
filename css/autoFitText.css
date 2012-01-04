@@ -72,3 +72,7 @@ footer {
 	color: #7f7561;
 	font-size: 60px;
  }
+ 
+#sharing ul li {
+  float: left;
+}
