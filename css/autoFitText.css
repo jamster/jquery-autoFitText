@@ -73,6 +73,6 @@ footer {
 	font-size: 60px;
  }
  
-#sharing ul li {
-  float: left;
+#sharing ul  {
+  list-style-type: none;
 }
